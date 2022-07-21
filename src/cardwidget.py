@@ -8,16 +8,16 @@ from PySide6.QtWidgets import QWidget, QSizePolicy, QLabel
 
 
 class CardWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, text='', parent=None):
         super().__init__(parent)
 
         # internal data
-        self._main_text: str = ''
+        self._main_text: str = text
         # ui
         self.main_text_label = QLabel(self)
 
         self.setBackgroundRole(QPalette.Base)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
     def sizeHint(self) -> QSize:
         return QSize(200, 160)
@@ -34,7 +34,7 @@ class CardWidget(QWidget):
         font.setPixelSize(30)
         painter.setFont(font)
         contents_rect = self.contentsRect()
-        painter.drawText(contents_rect, Qt.AlignCenter,'七転び八起き')
+        painter.drawText(contents_rect, Qt.AlignCenter, self._main_text)
         pen = painter.pen()
         pen.setStyle(Qt.DotLine)
         painter.setPen(pen)
