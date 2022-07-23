@@ -4,7 +4,7 @@ from src.cardcontroller import CardController
 from src.cardwidget import CardWidget
 
 
-class BattleField(QWidget):
+class BattleField(Field):
     def __init__(self, parent=None):
         super().__init__(parent)
 

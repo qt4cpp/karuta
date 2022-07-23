@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QGridLayout
 
 
-class Field(QWidget):
+class FieldView(QWidget):
     def __init__(self, parent=None, deck=None):
         super().__init__(parent)
         self._deck = deck
