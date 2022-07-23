@@ -1,17 +1,40 @@
+import csv
 import sys
 
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QWidget
 
 from src.battlefield import BattleField
-from src.cardwidget import CardWidget
+from src.cardcontroller import CardController
+from src.hostfield import HostField
+
+
+class Karuta(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        controller = CardController('../data/4letters.csv')
+        controller.read()
+
+        battle_field = BattleField()
+        battle_field.set_deck(controller.create_deck())
+
+        # 問題を出す
+        host_field = HostField()
+        host_field.set_host_card(controller.create_deck())
+
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(host_field)
+        self.layout.addWidget(battle_field)
+        self.setLayout(self.layout)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setCentralWidget(BattleField(self))
+        karuta = Karuta()
+        self.setCentralWidget(karuta)
 
 
 if __name__ == '__main__':

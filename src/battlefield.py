@@ -8,10 +8,7 @@ class BattleField(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        card_controller = CardController(path='../data/4letters.csv')
-        card_controller.read()
-        deck = card_controller.create_deck(6)
-
+    def set_deck(self, deck):
         layout = QGridLayout()
         index = 0
         for i in range(5):
