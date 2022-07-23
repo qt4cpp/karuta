@@ -18,12 +18,12 @@ class Karuta(QWidget):
         controller = CardController('../data/4letters.csv', self.check_answer)
         controller.read()
 
-        battle_field = BattleField()
-        battle_field.set_deck(controller.create_deck())
+        battle_field = BattleField(controller.create_deck())
+        battle_field.deal(5, 3)
 
         # 問題を出す
-        host_field = HostField()
-        host_field.set_host_card(controller.create_deck())
+        host_field = HostField(controller.create_deck())
+        host_field.deal(1,1)
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(host_field)
@@ -33,6 +33,7 @@ class Karuta(QWidget):
     @Slot(QWidget)
     def check_answer(self, card: CardWidget):
         print(card._main_text)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):

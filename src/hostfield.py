@@ -1,15 +1,6 @@
-from PySide6.QtWidgets import QWidget, QGridLayout
-
-from src.cardwidget import CardWidget
+from src.fieldview import FieldView
 
 
-class HostField(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self._deck = []
-        self.layout = QGridLayout()
-
-    def set_host_card(self, card: CardWidget):
-        self.layout.addWidget(card[0])
-        self.setLayout(self.layout)
+class HostField(FieldView):
+    def __init__(self, deck, parent=None):
+        super().__init__(deck, parent)

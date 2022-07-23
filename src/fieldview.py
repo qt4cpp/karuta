@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QWidget, QGridLayout
 
 
 class FieldView(QWidget):
-    def __init__(self, parent=None, deck=None):
+    def __init__(self, deck, parent=None):
         super().__init__(parent)
         self._deck = deck
 
