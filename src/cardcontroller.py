@@ -5,10 +5,11 @@ from src.cardwidget import CardWidget
 
 
 class CardController:
-    def __init__(self, path):
+    def __init__(self, path, f):
         self._data = []
         self._deck = []
         self._path = path
+        self._f = f
 
     def read(self):
         with open(self._path) as file:
@@ -31,6 +32,7 @@ class CardController:
         for i in range(deck_size):
             c = self.pick(i)
             self._deck.append(CardWidget(c[0], c[1]))
+            self._deck[-1].clicked.connect(self._f)
         return self._deck
 
     def shuffle(self):
