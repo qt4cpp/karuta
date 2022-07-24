@@ -9,6 +9,9 @@ class FieldView(QWidget):
     def set_deck(self, deck):
         self._deck = deck
 
+    def get_deck(self):
+        return self._deck
+
     def deal(self, x, y):
         layout = QGridLayout()
         index = 0

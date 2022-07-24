@@ -57,6 +57,9 @@ class CardWidget(QWidget):
             self.clicked.emit(self)
         super().mouseReleaseEvent(event)
 
+    def corrected_answer(self):
+        self.setDisabled(True)
+
     def __eq__(self, other):
         return self._main_text == other._main_text
 
