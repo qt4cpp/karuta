@@ -20,7 +20,7 @@ class Karuta(QWidget):
 
         self.data = []
         path = '../data/4letters.csv'
-        self.read(path)
+        self.data = read(path)
 
         user_card_controller = CardController(self.data, self.check_answer)
         self.battle_field = BattleField(user_card_controller.create_deck())
@@ -53,11 +53,15 @@ class Karuta(QWidget):
             self.battle_field.setDisabled(False)
             self.answer_wrong.emit()
 
-    def read(self, path):
-        with open(path) as file:
-            reader = csv.reader(file)
-            for row in reader:
-                self.data.append(row)
+
+def read(path):
+    data = []
+    with open(path) as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(row)
+    return data
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
