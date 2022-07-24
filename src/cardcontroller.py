@@ -5,17 +5,10 @@ from src.cardwidget import CardWidget
 
 
 class CardController:
-    def __init__(self, path, f):
-        self._data = []
+    def __init__(self, data, f=None):
+        self._data = data
         self._deck = []
-        self._path = path
         self._f = f
-
-    def read(self):
-        with open(self._path) as file:
-            reader = csv.reader(file)
-            for row in reader:
-                self._data.append(row)
 
     def pick(self, index):
         return self._data[index]

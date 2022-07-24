@@ -18,15 +18,15 @@ class Karuta(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        controller = CardController('../data/4letters.csv', self.check_answer)
-        controller.read()
+        self.data = []
+        path = '../data/4letters.csv'
+        self.read(path)
 
-        self.battle_field = BattleField(controller.create_deck())
-        # self.battle_field.deal(5, 3)
+        user_card_controller = CardController(self.data, self.check_answer)
+        self.battle_field = BattleField(user_card_controller.create_deck())
 
-        # 問題を出す
-        self.host_field = HostField(controller.create_deck())
-        # self.host_field.deal(1,1)
+        host_card_controller = CardController(self.data)
+        self.host_field = HostField(host_card_controller.create_deck())
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.host_field)
@@ -53,6 +53,11 @@ class Karuta(QWidget):
             self.battle_field.setDisabled(False)
             self.answer_wrong.emit()
 
+    def read(self, path):
+        with open(path) as file:
+            reader = csv.reader(file)
+            for row in reader:
+                self.data.append(row)
 
 class MainWindow(QMainWindow):
     def __init__(self):
