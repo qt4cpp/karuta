@@ -1,11 +1,14 @@
 import random
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGridLayout
 
 from src.fieldview import FieldView
 
 
 class HostField(FieldView):
+    host_cards_empty = Signal()
+
     def __init__(self, deck, parent=None):
         super().__init__(deck, parent)
         self.question = None
@@ -22,6 +25,9 @@ class HostField(FieldView):
 
     def next(self):
         previous = self.question
-        self.question = self._deck.pop()
+        try:
+            self.question = self._deck.pop()
+        except IndexError:
+            self.host_cards_empty.emit()
         self.layout().replaceWidget(previous, self.question)
         previous.hide()
