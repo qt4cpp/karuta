@@ -9,8 +9,8 @@ from src.fieldview import FieldView
 class HostField(FieldView):
     host_cards_empty = Signal()
 
-    def __init__(self, deck, parent=None):
-        super().__init__(deck, parent)
+    def __init__(self, card_controller, parent=None):
+        super().__init__(card_controller, parent)
         self.question = None
 
     def ready_to_start(self):

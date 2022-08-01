@@ -4,8 +4,8 @@ from src.fieldview import FieldView
 
 
 class BattleField(FieldView):
-    def __init__(self, deck, parent=None):
-        super().__init__(deck, parent)
+    def __init__(self, card_controller, parent=None):
+        super().__init__(card_controller, parent)
 
     def ready_to_start(self):
         random.shuffle(self._deck)

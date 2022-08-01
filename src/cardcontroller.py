@@ -7,7 +7,6 @@ from src.cardwidget import CardWidget
 class CardController:
     def __init__(self, data, f=None):
         self._data = data
-        self._deck = []
         self._f = f
 
     def pick(self, index):
@@ -21,13 +20,10 @@ class CardController:
             deck_size = min(amount, len(self._data))
         else:
             deck_size = len(self._data)
-        self._deck = []
+        _deck = []
         for i in range(deck_size):
             c = self.pick(i)
-            self._deck.append(CardWidget(c[0], c[1]))
+            _deck.append(CardWidget(c[0], c[1]))
             if self._f is not None:
-                self._deck[-1].clicked.connect(self._f)
-        return self._deck
-
-    def shuffle(self):
-        random.shuffle(self._deck)
+                _deck[-1].clicked.connect(self._f)
+        return _deck

@@ -1,16 +1,17 @@
 from PySide6.QtWidgets import QWidget, QGridLayout
 
+from src.cardcontroller import CardController
+
 
 class FieldView(QWidget):
-    def __init__(self, deck, parent=None):
+    def __init__(self, card_controller: CardController, parent=None):
         super().__init__(parent)
-        self._deck = deck
+        self.card_controller = card_controller
+        self._deck = card_controller.create_deck()
 
-    def set_deck(self, deck):
-        self._deck = deck
-
-    def get_deck(self):
-        return self._deck
+    def set_controller(self, card_controller: CardController):
+        self.card_controller = card_controller
+        self._deck = self.card_controller.create_deck()
 
     def deal(self, x, y):
         layout = QGridLayout()
