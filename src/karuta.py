@@ -24,7 +24,7 @@ class Karuta(QWidget):
         # 終わったらまた、スタートに戻る。
 
         self.start_button = QPushButton('&Start', self)
-        self.start_button.clicked.connect(self.ready)
+        self.start_button.clicked.connect(self.start)
         self.abort_button = QPushButton('&Abort', self)
         self.abort_button.hide()
 
@@ -35,28 +35,34 @@ class Karuta(QWidget):
         path = '../data/4letters.csv'
         self.data = read(path)
 
-        user_card_controller = CardController(self.data, self.check_answer)
+        user_card_controller = CardController(self.data[0:2], self.check_answer)
         self.battle_field = BattleField(user_card_controller)
 
-        host_card_controller = CardController(self.data)
+        host_card_controller = CardController(self.data[0:2])
         self.host_field = HostField(host_card_controller)
         self.answer_correct.connect(self.host_field.next)
         self.host_field.host_cards_empty.connect(self.reset_to_start)
 
+        self.layout.addWidget(self.battle_field)
+        self.battle_field.hide()
+        self.layout.addWidget(self.host_field)
+        self.host_field.hide()
+
     def ready(self):
-        self.start_button.hide()
-        self.start()
+        self.battle_field.ready_to_start()
+        self.host_field.ready_to_start()
 
     def start(self):
-        self.battle_field.ready_to_start()
-        self.layout.addWidget(self.battle_field)
-        self.host_field.ready_to_start()
-        self.layout.addWidget(self.host_field)
+        self.ready()
+        self.battle_field.show()
+        self.host_field.show()
+        self.start_button.hide()
 
     def reset_to_start(self):
         self.battle_field.hide()
         self.host_field.hide()
         self.start_button.show()
+        self.ready()
 
     @Slot(QWidget)
     def check_answer(self, answer: CardWidget):

@@ -60,6 +60,9 @@ class CardWidget(QWidget):
     def corrected_answer(self):
         self.setDisabled(True)
 
+    def reset(self):
+        self.setDisabled(False)
+
     def __eq__(self, other):
         return self._main_text == other._main_text
 
