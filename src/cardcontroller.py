@@ -6,8 +6,8 @@ from src.cardwidget import CardWidget
 class CardController(QObject):
     set_reset_deck = Signal()
 
-    def __init__(self, data, clicked_action=None, reset_action=None):
-        super().__init__()
+    def __init__(self, data, clicked_action=None, reset_action=None, parent=None):
+        super().__init__(parent)
         self._data = data
         self._deck = None
         self.clicked_action = clicked_action
@@ -32,6 +32,3 @@ class CardController(QObject):
                 self._deck[-1].clicked.connect(self.clicked_action)
                 self.set_reset_deck.connect(self._deck[-1].reset)
         return self._deck
-
-    def reset(self):
-        self.set_reset_deck.emit()

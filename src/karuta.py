@@ -35,34 +35,34 @@ class Karuta(QWidget):
         path = '../data/4letters.csv'
         self.data = read(path)
 
-        user_card_controller = CardController(self.data[0:2], self.check_answer)
-        self.battle_field = BattleField(user_card_controller)
+    def ready(self):
+        user_card_controller = CardController(self.data[0:7], self.check_answer, self)
+        self.battle_field = BattleField(user_card_controller, self)
 
-        host_card_controller = CardController(self.data[0:2])
-        self.host_field = HostField(host_card_controller)
+        host_card_controller = CardController(self.data[0:7], parent=self)
+        self.host_field = HostField(host_card_controller, self)
         self.answer_correct.connect(self.host_field.next)
-        self.host_field.host_cards_empty.connect(self.reset_to_start)
 
         self.layout.addWidget(self.battle_field)
         self.battle_field.hide()
         self.layout.addWidget(self.host_field)
         self.host_field.hide()
-
-    def ready(self):
-        self.battle_field.ready_to_start()
-        self.host_field.ready_to_start()
+        self.host_field.host_cards_empty.connect(self.reset_to_start)
 
     def start(self):
         self.ready()
+        self.battle_field.ready_to_start()
+        self.host_field.ready_to_start()
         self.battle_field.show()
         self.host_field.show()
         self.start_button.hide()
 
     def reset_to_start(self):
-        self.battle_field.hide()
         self.host_field.hide()
+        self.battle_field.hide()
+        # del self.host_field, self.battle_field
         self.start_button.show()
-        self.ready()
+
 
     @Slot(QWidget)
     def check_answer(self, answer: CardWidget):

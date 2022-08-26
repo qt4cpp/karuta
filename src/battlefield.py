@@ -14,6 +14,5 @@ class BattleField(QWidget):
         self.setLayout(l)
 
     def ready_to_start(self):
-        self.field.card_controller.reset()
         random.shuffle(self.field._deck)
         self.field.deal(5, 3)
