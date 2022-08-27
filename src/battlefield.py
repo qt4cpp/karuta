@@ -6,13 +6,21 @@ from src.fieldview import FieldView
 
 
 class BattleField(QWidget):
-    def __init__(self, card_controller, parent=None):
+    def __init__(self, deck, parent=None):
         super().__init__(parent)
-        self.field = FieldView(card_controller, parent)
-        l = QGridLayout()
-        l.addWidget(self.field)
-        self.setLayout(l)
+        self.deck = deck
 
     def ready_to_start(self):
-        random.shuffle(self.field._deck)
-        self.field.deal(5, 3)
+        random.shuffle(self.deck)
+        self.deal(5, 3)
+
+    def deal(self, x, y):
+        l = QGridLayout()
+        index = 0
+        for i in range(x):
+            for j in range(y):
+                if index >= len(self.deck):
+                    break
+                l.addWidget(self.deck[index], i, j)
+                index += 1
+        self.setLayout(l)

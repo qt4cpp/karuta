@@ -19,16 +19,16 @@ class CardController(QObject):
     def data(self):
         return self._data
 
-    def create_deck(self, amount=0):
+    @staticmethod
+    def create_deck(data, amount=0, clicked_action=None):
         if amount:
-            deck_size = min(amount, len(self._data))
+            deck_size = min(amount, len(data))
         else:
-            deck_size = len(self._data)
-        self._deck = []
+            deck_size = len(data)
+        deck = []
         for i in range(deck_size):
-            c = self.pick(i)
-            self._deck.append(CardWidget(c[0], c[1]))
-            if self.clicked_action is not None:
-                self._deck[-1].clicked.connect(self.clicked_action)
-                self.set_reset_deck.connect(self._deck[-1].reset)
-        return self._deck
+            c = data[i]
+            deck.append(CardWidget(c[0], c[1]))
+            if clicked_action is not None:
+                deck[-1].clicked.connect(clicked_action)
+        return deck

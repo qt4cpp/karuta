@@ -28,6 +28,7 @@ class Karuta(QWidget):
         self.abort_button = QPushButton('&Abort', self)
         self.abort_button.hide()
 
+        self.card_controller = CardController(self.data[0:7], self)
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.start_button)
         self.setLayout(self.layout)
@@ -36,12 +37,14 @@ class Karuta(QWidget):
         self.data = read(path)
 
     def ready(self):
-        user_card_controller = CardController(self.data[0:7], self.check_answer, self)
-        self.battle_field = BattleField(user_card_controller, self)
+        # CardController を渡さずに、こちらのクラスからCard Widget を渡せるようにできないか。
+        card_controller = CardController(self.data[0:7], self.check_answer, self)
+        self.battle_field = BattleField(card_controller.create_deck(
+            self.data[0:7], clicked_action=self.check_answer), parent=self)
 
-        host_card_controller = CardController(self.data[0:7], parent=self)
-        self.host_field = HostField(host_card_controller, self)
-        self.answer_correct.connect(self.host_field.next)
+        question_deck = CardController.create_deck(self.data[0:7])
+        self.host_field = HostField(question_deck[0], self)
+        # self.answer_correct.connect(self.host_field.next)
 
         self.layout.addWidget(self.battle_field)
         self.battle_field.hide()
@@ -56,6 +59,7 @@ class Karuta(QWidget):
         self.battle_field.show()
         self.host_field.show()
         self.start_button.hide()
+
 
     def reset_to_start(self):
         self.host_field.hide()
