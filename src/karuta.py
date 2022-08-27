@@ -19,25 +19,23 @@ class Karuta(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        path = '../data/4letters.csv'
         self.data = []
+        self.data = read(path)
 
         self.start_button = QPushButton('&Start', self)
         self.start_button.clicked.connect(self.start)
         self.abort_button = QPushButton('&Abort', self)
         self.abort_button.hide()
 
-        self.card_controller = CardController(self.data[0:7], self)
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.start_button)
         self.setLayout(self.layout)
 
-        path = '../data/4letters.csv'
-        self.data = read(path)
-
     def ready(self):
         using_data = random.sample(self.data, 7)
-        self.battle_field = BattleField(CardController.create_deck(
-            data=using_data, clicked_action=self.check_answer), parent=self)
+        battle_deck = CardController.create_deck(data=using_data, clicked_action=self.check_answer)
+        self.battle_field = BattleField(battle_deck, parent=self)
 
         random.shuffle(using_data)
         self.question_deck = CardController.create_deck(using_data)
@@ -52,7 +50,6 @@ class Karuta(QWidget):
     def start(self):
         self.ready()
         self.battle_field.ready_to_start()
-        self.host_field.ready_to_start()
         self.battle_field.show()
         self.host_field.show()
         self.start_button.hide()

@@ -16,10 +16,6 @@ class HostField(QWidget):
         l.addWidget(self.question)
         self.setLayout(l)
 
-    def ready_to_start(self):
-        # self.next()
-        pass
-
     def deal(self, w):
         if self.question is not None:
             previous = self.question
