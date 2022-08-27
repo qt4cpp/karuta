@@ -24,3 +24,6 @@ class BattleField(QWidget):
                 l.addWidget(self.deck[index], i, j)
                 index += 1
         self.setLayout(l)
+
+    def end(self):
+        pass

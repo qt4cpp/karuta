@@ -21,5 +21,12 @@ class HostField(QWidget):
         pass
 
     def deal(self, w):
-        l = self.layout().addWidget(w)
-        self.setLayout(l)
+        if self.question is not None:
+            previous = self.question
+            previous.hide()
+        self.question = w
+        l = self.layout().replaceWidget(previous, self.question)
+
+    def end(self):
+        self.question.hide()
+        self.question = None
