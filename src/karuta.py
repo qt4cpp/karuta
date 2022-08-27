@@ -7,7 +7,7 @@ from PySide6.QtCore import Slot, Signal
 from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QLabel, QPushButton, QVBoxLayout
 
 from src.battlefield import BattleField
-from src.cardcontroller import CardController
+import cardcontroller
 from src.cardwidget import CardWidget
 from src.hostfield import HostField
 
@@ -34,11 +34,11 @@ class Karuta(QWidget):
 
     def ready(self):
         using_data = random.sample(self.data, 7)
-        battle_deck = CardController.create_deck(data=using_data, clicked_action=self.check_answer)
+        battle_deck = cardcontroller.create_deck(data=using_data, clicked_action=self.check_answer)
         self.battle_field = BattleField(battle_deck, parent=self)
 
         random.shuffle(using_data)
-        self.question_deck = CardController.create_deck(using_data)
+        self.question_deck = cardcontroller.create_deck(using_data)
         self.host_field = HostField(self.question_deck.pop(), self)
 
         self.layout.addWidget(self.battle_field)
